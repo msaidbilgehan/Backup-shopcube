@@ -138,7 +138,8 @@ def category(category_name):
 
 @module_blueprint.route("/sub/<sub_id>/page/<int:page>")
 @module_blueprint.route("/sub/<sub_id>")
-def subcategory(sub_id, page=1, methods=["GET"]):
+def subcategory(sub_id, page=1, methods=None):
+    methods = ["GET"] if methods is None else methods
     context = mhelp.context()
     PAGINATION = 5
     end = page * PAGINATION
