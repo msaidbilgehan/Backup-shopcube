@@ -8,6 +8,7 @@ from pathlib import Path
 from shopyo.api.file import trycopytree
 from shopyo.api.file import trymkdir
 from shopyo.api.info import printinfo
+from security import safe_command
 
 dirpath = Path(__file__).parent.absolute()
 dirpathparent = Path(__file__).parent.parent.absolute()
@@ -57,13 +58,13 @@ def main():
     elif args[1] == "runhere":
         source = os.path.join(dirpathparent, "shopcube")
         commands = ["shopyo", *args[2:]]
-        p = subprocess.Popen(commands, cwd=os.getcwd())
+        p = safe_command.run(subprocess.Popen, commands, cwd=os.getcwd())
         p.wait()
     else:
         print("[NOTE] Running shopyo commands inside packages!")
         source = os.path.join(dirpathparent, "shopcube")
         commands = ["shopyo", *args[1:]]
-        p = subprocess.Popen(commands, cwd=source)
+        p = safe_command.run(subprocess.Popen, commands, cwd=source)
         p.wait()
 
 
